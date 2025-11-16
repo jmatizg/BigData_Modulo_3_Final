@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Conteo de objetos salón de cómputo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Estilos mínimos, solo estética -->
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #111827;
+      color: #e5e7eb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 320px 640px;
+      gap: 24px;
+      padding: 24px;
+      max-width: 1024px;
+      width: 100%;
+    }
+    .panel {
+      background: #020617;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #1f2937;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    h1 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #f9fafb;
+    }
+    p { font-size: 0.85rem; margin-bottom: 12px; color: #9ca3af; }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+      color: #d1d5db;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      margin-bottom: 12px;
+    }
+    button {
+      width: 100%;
+      padding: 8px 12px;
+      margin-top: 4px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: #22c55e;
+      color: #022c22;
+      transition: transform 0.05s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+    button:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.4);
+    }
+    #status {
+      font-size: 0.8rem;
+      margin-top: 8px;
+      color: #a5b4fc;
+      min-height: 1.2em;
+    }
+    #counts {
+      font-size: 0.8rem;
+      margin-top: 12px;
+      border-top: 1px solid #1f2937;
+      padding-top: 8px;
+    }
+    #counts table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+    #counts th, #counts td {
+      font-size: 0.8rem;
+      padding: 2px 0;
+      text-align: left;
+    }
+    #counts th { color: #9ca3af; font-weight: 500; }
+    #counts td { color: #e5e7eb; }
+    #canvas {
+      width: 640px;
+      height: 640px;
+      background: #020617;
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+    }
+    .canvas-wrapper {
+      position: relative;
+      width: 640px;
+      height: 640px;
+    }
+  </style>
+
+  <!-- TFJS core + backend CPU + TFLite (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-cpu"></script>
+  <!-- Nota: se usa versión alpha.10, y se apunta a tf-tflite.min.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.10/dist/tf-tflite.min.js"></script>
+</head>
+<body>
+  <main>
+    <section class="panel">
+      <h1>Detector de objetos del salón</h1>
+      <p>
+        Sube una imagen general del salón de cómputo. El modelo TFLite se
+        ejecuta localmente en el navegador (sin servidor).
+      </p>
+
+      <label for="image-input">Imagen del salón</label>
+      <input type="file" id="image-input" accept="image/*" />
+
+      <button id="run-button" disabled>Detectar objetos</button>
+
+      <div id="status">Inicializando TensorFlow.js…</div>
+
+      <div id="counts"></div>
+    </section>
+
+    <section class="panel canvas-wrapper">
+      <canvas id="canvas" width="640" height="640"></canvas>
+    </section>
+  </main>
+
+  <!-- Lógica de modelo e inferencia -->
+  <script src="app.js"></script>
+</body>
+</html>
