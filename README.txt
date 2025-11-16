@@ -1,5 +1,5 @@
 ============================================================
-// Documentación básica del proyecto
+// Documentación
 ============================================================
 //
 // Descripción del modelo
@@ -95,3 +95,4 @@ Para ejecutar
 // muestra el conteo de objetos detectados por clase, logrando
 // así detectar y contar los elementos del salón sin depender de
 // procesamiento en servidor.
+
